@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Dataset</title>
+
+    <link rel="stylesheet" type="text/css" href="/static/main.css">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/jquery-ui.min.js"></script>
+</head>
+<body>
+
+<div class="Info">
+    <label for="dataset_name">dataset_name:</label>
+    <input type="text" id="dataset_name" name="dataset_name" value="${DATASET_NAME}"><br><br>
+    <label for="class_idx">class_idx:</label>
+    <input type="text" id="class_idx" name="class_idx" value="${CLASS_IDX}"><br><br>
+    <label for="annotation_id">annotation_id:</label>
+    <input type="text" id="annotation_id" name="annotation_id" value="${ANNOTATION_ID}"><br><br>
+    <label for="image_id">image_id:</label>
+    <input type="text" id="image_id" name="image_id" value="${IMAGE_ID}"><br><br>
+    <button onclick="showAnnotation()">show annotation</button>
+    <button onclick="showFullImage()">show full image</button><br><br>
+</div>
+
+<div class="Annotation">
+    <div id="AnnotationID">
+
+    </div>
+    <div id="my_image_container" class="img-overlay-wrap">
+        <img id="my_image" src=""/>
+        <svg id="theSVG">
+        </svg>
+    </div>
+</div>
+
+<div id="QueryResult">
+
+</div>
+
+</body>
+
+<script type="text/javascript" src="/static/utils.js"></script>
+<script type="text/javascript" src="/static/dataset.js"></script>
+</html>

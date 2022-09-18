@@ -1,0 +1,28 @@
+_BASE_: Base-PointRend-RCNN-FPN.yaml
+MODEL:
+  META_ARCHITECTURE: "PointRendRCNN"
+  # WEIGHTS: "detectron2://ImageNetPretrained/MSRA/R-50.pkl"
+  WEIGHTS: "detectron2://PointRend/InstanceSegmentation/pointrend_rcnn_R_50_FPN_3x_coco/164955410/model_final_3c3198.pkl"
+  MASK_ON: true
+  RESNETS:
+    DEPTH: 50
+  ROI_HEADS:
+    NUM_CLASSES: 100
+  POINT_HEAD:
+    NUM_CLASSES: 100
+    NUM_HEADS: 1
+    SUBDIVISION_STEPS: 3 # 3 is 56 x 56
+DATASETS:
+  TRAIN: ("ade_train",)
+  TEST: ("ade_val",)
+INPUT:
+  MASK_FORMAT: "bitmask"
+SOLVER:
+  STEPS: (52500, 62500)
+  MAX_ITER: 67500
+  IMS_PER_BATCH: 2
+  BASE_LR: 0.0025
+  CHECKPOINT_PERIOD: 5000
+OUTPUT_DIR: "./outputs/point_rend/nov4/train_001"
+TEST:
+  EVAL_PERIOD: 100000

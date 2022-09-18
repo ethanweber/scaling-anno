@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Tree</title>
+
+    <link rel="stylesheet" type="text/css" href="/static/main.css">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/jquery-ui.min.js"></script>
+<!--    <meta charset="utf-8">-->
+</head>
+<body>
+
+<div class="Info">
+    <label for="dataset_name">dataset_name:</label>
+    <input type="text" id="dataset_name" name="dataset_name" value="${DATASET_NAME}"><br><br>
+    <label for="class_name">class_name:</label>
+    <input type="text" id="class_name" name="class_name" value="${CLASS_NAME}" disabled><br><br>
+    <label for="class_idx">class_idx:</label>
+    <input type="text" id="class_idx" name="class_idx" value="${CLASS_IDX}"><br><br>
+    <label for="cluster_id">cluster_id:</label>
+    <input type="text" id="cluster_id" name="cluster_id" value="${CLUSTER_ID}"><br><br>
+    <button onclick="updateClusterInfo()">update results</button>
+    <br><br>
+</div>
+
+<div class="Dendogram">
+    <div id="DendogramTitle">dendogram from current root</div><br><br>
+    <div id="my_dataviz"></div>
+</div>
+
+<div class="ClusterSection">
+    <div id="topInfo" class="cluster_heading"></div>
+    <br>
+    <div>
+        <div class="split left">
+            <span id="leftInfo" class="cluster_heading"></span>
+            <div id="leftChild"></div>
+        </div>
+
+        <div class="split right">
+            <span id="rightInfo" class="cluster_heading"></span>
+            <div id="rightChild"></div>
+        </div>
+    </div>
+</div>
+
+
+<div id="QueryResult">
+
+</div>
+
+</body>
+
+<script src="https://d3js.org/d3.v4.js"></script>
+<script type="text/javascript" src="/static/dendogram.js"></script>
+<script type="text/javascript" src="/static/utils.js"></script>
+<script type="text/javascript" src="/static/tree.js"></script>
+</html>

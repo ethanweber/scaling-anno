@@ -1,0 +1,242 @@
+html, body {
+    /*text-align: center;*/
+}
+
+.Info {
+    text-align: center;
+    text-decoration: underline;
+}
+
+.Instructions {
+    /*align-content: center;*/
+    /*display: block;*/
+    /*width: 50%;*/
+    /*margin: auto;*/
+}
+
+.Instructions ul {
+    /*margin: auto;*/
+    /*padding: 0;*/
+    display: table;
+    margin: 0 auto;
+    /*margin: 0;*/
+    /*list-style: none;*/
+}
+
+.Edit {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.Annotation {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
+/*Image with polygon drawn on it.*/
+.img-overlay-wrap {
+    position: relative;
+    display: inline-block;
+    overflow: hidden;
+    outline: 2px solid black;
+}
+
+.img-overlay-wrap svg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.img-overlay-wrap img {
+    vertical-align: middle;
+}
+
+/*.img-overlay-wrap polygon {*/
+polygon {
+    fill: green;
+    fill-opacity: 0.2;
+    stroke: green;
+    stroke-width: 5px;
+    fill-rule: nonzero;
+}
+
+.img-overlay-wrap polygon .gt {
+    fill: #00FF00;
+    stroke: #00FF00;
+}
+
+.img-overlay-wrap polygon .detection {
+    fill: #FF0000;
+    stroke: #FF0000;
+}
+
+.cluster_heading {
+    display: table;
+    width: 100%;
+    table-layout: fixed; /* For cells of equal size */
+}
+
+.cluster_heading span {
+    display: table-cell;
+    text-align: center;
+}
+
+.handle {
+    position: absolute;
+    height: 1em;
+    width: 1em;
+    background-color: #004800;
+    border-radius: 100%;
+    /*display: inline-block;*/
+}
+
+/*Split half screen.*/
+.split {
+    display: block;
+    width: 50%;
+    margin: -3px;
+    border: 1px solid black;
+}
+
+/*Stay on left.*/
+.left {
+    float: left;
+}
+
+/*Stay on right.*/
+.right {
+    float: right;
+}
+
+#topInfo {
+    text-align: center;
+}
+
+#DendogramTitle {
+    text-align: center;
+}
+
+
+/*mturk related tasks*/
+
+td {
+    text-align: center;
+}
+
+th {
+    text-align: center;
+}
+
+
+/*https://www.w3schools.com/howto/howto_css_loader.asp*/
+.loader {
+    display: block;
+    margin: auto;
+    border: 16px solid #f3f3f3; /* Light grey */
+    border-top: 16px solid #3498db; /* Blue */
+    border-radius: 50%;
+    width: 120px;
+    height: 120px;
+    animation: spin 2s linear infinite;
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+.PolygonExamplePair {
+    border: 2px solid black;
+    margin: 4px;
+    padding: 5px;
+    display: block;
+    width: 100%;
+}
+
+.PolygonExamplePair div {
+    vertical-align: middle;
+    display: inline-block;
+    width: 50%;
+}
+
+/*.PolygonExamplePairLeft {*/
+/*    text-align: right;*/
+/*}*/
+
+/*.PolygonExamplePairRight {*/
+/*    text-align: left;*/
+/*}*/
+
+polyline {
+    stroke: blue;
+    fill: none;
+    stroke-width: 3px;
+}
+
+circle {
+    fill: lightblue;
+}
+
+.TreeDiv {
+    display: inline-block;
+}
+
+.PickNRowItem {
+    display: inline-block;
+}
+
+.ExampleTemplateClass1 {
+    font-size: 20px;
+}
+
+.ExampleTemplateClass2 {
+    font-size: 20px;
+}
+
+.ExampleTemplateText1 {
+    font-size: 20px;
+}
+
+.ExampleTemplateText2 {
+    font-size: 20px;
+}
+
+.BinaryQuestionClass {
+    font-size: 20px;
+}
+
+.QualResultsElement {
+    width: 50%;
+}
+
+.ExampleTemplateContent1 .img-overlay-wrap {
+    display: block;
+    margin: auto;
+}
+
+.BinaryQuestionImage .img-overlay-wrap {
+    display: block;
+    margin: auto;
+}
+
+.ExampleTemplateClass1 {
+    text-align: center;
+}
+
+.ExampleTemplateText1 {
+    text-align: center;
+}
+
+.QualificationResultTemplate2 .img-overlay-wrap {
+    display: block;
+    margin: auto;
+}

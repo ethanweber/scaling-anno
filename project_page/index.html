@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Scaling up Instance Annotation via Label Propagation">
+    <meta name="author" content="Dim P. Papadopoulos*, Ethan Weber*, Antonio">
+
+    <title>Scaling up Instance Annotation via Label Propagation</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+    <!-- Custom styles for this template -->
+    <link href="custom.css" rel="stylesheet">
+    <!--    <link rel="icon" href="img/favicon.gif" type="image/gif">-->
+
+    <link rel="icon" type="image/png" href="images/icon.png">
+
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-37QYEXDHGT"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+
+        gtag('config', 'G-37QYEXDHGT');
+    </script>
+</head>
+
+<body>
+    <div class="jumbotron jumbotron-fluid">
+        <div class="container"></div>
+        <h2>Scaling up Instance Annotation via Label Propagation</h2>
+        <!--    <h3></h3>-->
+        <hr>
+        <p class="authors">
+            <a href="http://people.csail.mit.edu/dimpapa/"> Dim P. Papadopoulos*</a>,
+            <a href="https://ethanweber.me/"> Ethan Weber*</a>,
+            <a href="https://web.mit.edu/torralba/www/"> Antonio Torralba</a>,</br>
+        </p>
+        <div class="btn-group" role="group" aria-label="Top menu">
+            <a class="btn btn-primary" href="papadopoulos21iccv.pdf">Paper</a>
+            <a class="btn btn-primary" href="https://github.com/ethanweber/scaling-anno">Code and Data</a>
+            <a class="btn btn-primary" href="papadopoulos21iccv_slides.pdf">Slides</a>
+            <a class="btn btn-primary" href="papadopoulos21iccv_poster.pdf">Poster</a>
+        </div>
+    </div>
+
+
+    <div class="container">
+        <div class="section">
+            <h2>Introduction</h2>
+            <hr>
+            <div class="row align-items-center">
+                <div class="col justify-content-center text-center">
+                    <img width=75% src="images/teaser_cars2.png">
+                </div>
+                <p>
+                    Manually annotating object segmentation masks is very time-consuming.
+                    While interactive segmentation methods offer a more efficient alternative,
+                    they become unaffordable at a large scale because the cost grows linearly
+                    with the number of annotated masks. In this paper, we propose a highly
+                    efficient annotation scheme for building large datasets with object segmentation
+                    masks. At a large scale, images contain many object instances with similar
+                    appearance. We exploit these similarities by using hierarchical clustering
+                    on mask predictions made by a segmentation model. We propose a scheme
+                    that efficiently searches through the hierarchy of clusters and selects
+                    which clusters to annotate. Humans manually verify only a few masks per
+                    cluster, and the labels are propagated to the whole cluster. Through a
+                    large-scale experiment to populate 1M unlabeled images with object segmentation
+                    masks for 80 object classes, we show that (1) we obtain 1M object segmentation
+                    masks with an total annotation time of only 290 hours; (2) we reduce
+                    annotation time by 76x compared to manual annotation; (3) the segmentation
+                    quality of our masks is on par with those from manually annotated datasets.
+                </p>
+            </div>
+
+        </div>
+
+        <div class="section">
+            <h2>Manual Annotation is expensive!</h2>
+            <hr>
+            <div class="col justify-content-center text-center">
+                <img width=75% src="images/datasets.png">
+            </div>
+            <p>
+                Manual annotation for instance segmentation is expensive as it requires humans to draw a
+                detailed outline around every object in an image. For example, annotating COCO required 80
+                seconds per mask, an image in Cityscapes took 1.5 hours, and annotating ADE20K by a single
+                annotator took several years. At this pace, constructing a dataset with 10M masks would
+                require more than 200k hours and cost over $2M. An alternative is interactive segmentation,
+                where the human interaction is much faster (e.g., boxes, scribbles, clicks). Given this
+                interaction, these methods infer the final object mask. They offer substantial gains in
+                annotation time and can lead to larger datasets. However, because annotators intervene on
+                every object, the cost grows linearly with the number of annotations and therefore, at a
+                larger scale, they become unaffordable.
+            </p>
+        </div>
+
+        <div class="section">
+            <h2>Proposed Method</h2>
+            <hr>
+            <div class="col justify-content-center text-center">
+                <img width=95% src="images/method.png">
+            </div>
+            <p>
+                Given a small set of manually annotated images with segmentation masks and a large set
+                of unlabeled images, our goal is to populate the unlabeled set with high-quality masks
+                using as little human intervention as possible. Our pipeline consists of five steps:
+                <b>(a) Detection</b>: we deploy an instance segmentation model on an unlabeled set to obtain
+                segmentation masks. <b>(b) Clustering</b>: class-specific masks are hierarchically clustered
+                to obtain a tree. <b>(c) Selecting clusters</b>: we efficiently search the tree and select
+                candidate clusters that are likely to contain high-quality masks. <b>(d) Human annotation:</b>
+                for each candidate cluster, we sample a few masks and ask annotators to verify whether
+                they are correct or not. We use these labels to estimate the quality of the clusters.
+                <b>(e) Propagation:</b> If the estimated quality is very high or very low (i.e, the cluster
+                almost exclusively contains correct or wrong masks), we propagate the verification
+                labels to the whole cluster and set it as a leaf. Otherwise, we further split it.
+                We repeat (c), (d) and (e) to discover high- quality clusters with as few questions
+                as possible.
+            </p>
+        </div>
+
+
+        <div class="section">
+            <h2>Simulated Results </h2>
+            <hr>
+            <div class="col justify-content-center text-center">
+                <img width=95% src="images/simADE.png">
+            </div>
+            <p>
+                We perform simulated experiments to explore different design choices for each step of our pipeline
+                and find parameters to minimize the annotation cost given a desired annotation quality.
+                We perform experiments on ADE20K and show the number of high-quality clusters, the annotation
+                quantity and the annotation quality versus the number of annotated clusters in log-log scale.
+                <b>(a) Clustering</b>: The effect of using different feature representations <i>F</i> to construct
+                <i>T</i>. <b>(b) Searching</b>: The effect of using different search algorithms when searching the
+                tree <i>T</i>. <b>(c) Selecting clusters</b>: The effect of actively selecting clusters to annotate
+                using different <i>K<sub>pa</sub></i> values. The black lines correspond to the best result in each row.
+            </p>
+            <div class="col justify-content-center text-center">
+                <img width=95% src="images/simCOCO.png">
+            </div>
+            <p>
+                We also conduct simulated experiments on COCO and OpenImages. We follow the setting of the ADE20K
+                experiments
+                exactly without tuning any parameters and train our initial segmentation model on 2k COCO images (80
+                classes).
+                We run our pipeline on two unlabeled sets of images: (a) the remaining 121k COCO images, and (b) the
+                OpenImages
+                subset with a GT in the 60 COCO classes that overlap with the 350 OpenImages ones (316k images).
+                We obtain (a) 86k COCO and (b) 270k OpenImages annotations with only 12 h (+300 h to annotate the
+                initial set).
+                With 312 annotation hours, we obtain 14k instances with manual annotations and 28k with corrective
+                clicks in either dataset
+                Our time saving on OpenImages is 19x with respect to manual annotation. The quality of our masks is
+                84.6% on COCO.
+                Benenson et. al. (corrective clicks) reports 82.0% for manual annotation and 84.0% for corrective clicks
+                on a subset
+                of COCO annotated with free-painting annotations. On OpenImages, we obtain 85.0% on the validation and
+                test set vs 86.0% with corrective clicks.
+            </p>
+
+        </div>
+
+
+        <div class="section">
+            <h2>Large-scale Annotation Experiment</h2>
+            <hr>
+            <div class="col justify-content-center text-center">
+                <img width=95% src="images/places.png">
+            </div>
+            <p>
+                We conduct a large-scale experiment with real annotators on Amazon Mechanical Turk (AMT) to obtain
+                object
+                segmentation masks using our framework with a fixed annotation budget. We use 1M images from the
+                trainval
+                set of the Places dataset as our unlabeled set and using our method we populate it with high-quality
+                masks
+                for 80 object classes. We run in total 191,929 verification questions on AMT, resulting in 730 high
+                quality
+                clusters. We accept in total <b>993,677 high quality object segmentation masks</b>, which form our
+                annotated dataset.
+                The mean response time of the annotators is 1.4 s per binary question. The total time of the
+                verification
+                including quality control is 73 hours. Adding this time to the overhead for segmenting the initial set
+                results
+                in 290 annotation hours or less than $3,000. Note that manually drawing 1M polygons would require 22k
+                hours and
+                cost over $200k. Our framework leads to a 76x speed up in time compared to manual annotation.
+                To evaluate the segmentation quality (SQ) of our masks, we randomly select 1,142 images from the
+                unlabeled Places pool
+                and an expert annotator manually draws accurate polygons around each instance. We achieve an SQ of
+                81.4%.
+                The quality of our masks is on par with that of other datasets (e.g. ADE20K, COCO, Cityscapes, LVIS,
+                OpenImages).
+            </p>
+        </div>
+
+        <div class="section">
+            <h2>Paper</h2>
+            <hr>
+            <div>
+                <div class="list-group">
+                    <a href="papadopoulos21iccv.pdf" class="list-group-item">
+                        <img src="images/paper.png" style="width:100%; margin-right:-20px; margin-top:-10px;">
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>Bibtex</h2>
+            <hr>
+            <div class="bibtexsection">
+                @inproceedings{papadopoulos2021iccv,
+                author = {Papadopoulos, Dim P.
+                and Weber, Ethan
+                and Torralba, Antonio},
+                title = {Scaling up Instance Annotation via Label Propagation},
+                booktitle = {ICCV},
+                year={2021}
+                }
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>Acknowledgments</h2>
+            <hr>
+            <p>
+                This work is supported by the Mitsubishi Electric Research Laboratories. We thank V. Kalogeiton for
+                helpful discussion and proofreading.
+            </p>
+        </div>
+
+        <hr>
+
+        <footer>
+            <p>Send feedback and questions to Dim Papadopoulos (dimpapa[at]mit[dot]edu)</p>
+            <p><a href="https://accessibility.mit.edu/">MIT Accessibility</a></p>
+        </footer>
+
+        <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+            integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+            crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+            integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+            crossorigin="anonymous"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"
+            integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI"
+            crossorigin="anonymous"></script>
+
+</body>
+
+</html>
