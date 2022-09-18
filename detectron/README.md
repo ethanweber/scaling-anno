@@ -66,9 +66,3 @@ tensorboard \
     --bind_all \
     --logdir outputs/point_rend/trainA/004
 ```
-
-
-#### <hr> Helpful Jupyter Notebooks
-
-- notebooks/
-    - **DissectNetwork.ipynb**: Shows an example of loading a detectron2 model from a config with specified weights. It also shows code to run the model on images from filepaths and prints out the model parameters. You can make a copy of this notebook and experiment with the model architecture, what the model seems to have learned, etc.
