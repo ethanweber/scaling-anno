@@ -38,6 +38,8 @@ Below we outline the general structure of the repo. Note that some files or fold
     |- train_net.py                     # code to train detection network
     |- README.md                        # instructions for detection model
 - experiments/                          # EXPERIMENTS FROM THE PAPER
+    |- run_ade.py
+    |- run_lsun.py
 - rounds/                               # WHERE WEIGHTS AND ANNOTATIONS ARE STORED
 - src/                                  # PYTHON CODE USED THROUGHOUT PROJECT
 - web/                                  # WEB VISUALIZATION CODE
@@ -66,23 +68,3 @@ Below we outline the general structure of the repo. Note that some files or fold
    ```
 
 3. **Annotation**: With detections clustered and trees created, we perform annotation. In this step, we use a binary annotation task to efficiently find high and low quality detections. We aren't including the MTurk pipeline in this code release, but following the structure of `run_ade.py` provides the necessary framework.
-
-#### <hr> Notebooks
-
-```
-notebooks/
-    |- TODO.ipynb               # run binary task
-```
-
-#### <hr> Helpful commands
-
-```
-# start tensorboard
-tensorboard --samples_per_plugin scalars=100,images=10 --port 8880 --bind_all --logdir path/to/folder/
-```
-
-#### <hr> Download the Places annotations
-
-```
-TODO
-```
